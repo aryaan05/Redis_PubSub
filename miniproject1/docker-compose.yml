@@ -1,0 +1,28 @@
+version: "1.0"
+
+services:
+  redis:
+    image: redis:latest
+    container_name: redisminiproject
+    ports:
+      - "6379:6379"
+    volumes:
+      - "/Users/aryaan/Desktop/Data\ Science/ds5760\ NoSQL/Projects/MiniProject1:/usr/ds5760"
+    networks:
+      - app-network
+
+  python-app:
+    image: python:3.9-slim
+    container_name: pythonminiproject
+    depends_on:
+      - redis
+    volumes:
+      - "/Users/aryaan/Desktop/Data\ Science/ds5760\ NoSQL/Projects/MiniProject1:/usr/ds5760"
+    working_dir: /usr/ds5760/
+    networks:
+      - app-network
+    command: tail -f /dev/null
+
+networks:
+  app-network:
+    driver: bridge
